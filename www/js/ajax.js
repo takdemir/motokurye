@@ -55,7 +55,7 @@ var ajax={
     sessionID: null,
     sessionName: null,
     sessionKuryeId: null,
-    getipurl: "https://server.tbmyazilim.com",
+    getipurl: "https://tbmsoft.xyz",
 
     getip: function () {
 
