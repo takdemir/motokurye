@@ -660,7 +660,7 @@ mypanel.setlocationswithwatch();
 document.addEventListener("pause", onPause, false);
 function onPause() {
     setInterval(function(){
-        common.showToast("SetInterval","short","center",0);
+        //common.showToast("SetInterval","short","center",0);
 
 /*        backgroundGeolocation.isLocationEnabled(function (enabled) {
 
