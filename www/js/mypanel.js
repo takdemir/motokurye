@@ -162,7 +162,7 @@ var mypanel={
         window.localStorage.removeItem("ipurl");
         window.localStorage.setItem("regid","");
         window.localStorage.removeItem("regid");
-        window.location.href="login.html";
+        window.location.href="index.html";
     },
     getjobsOnkurye: function (kuryeID) {
 
