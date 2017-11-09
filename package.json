@@ -1,13 +1,17 @@
 {
-  "name": "krapp-push",
-  "version": "1.0.0",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "cordova": {
-    "platforms": []
-  },
-  "dependencies": {
-    "cordova-android": "^4.0.0"
-  }
+    "name": "krapp-push",
+    "version": "1.0.0",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "cordova": {
+        "platforms": [],
+        "plugins": {
+            "cordova-android-play-services-gradle-release": {}
+        }
+    },
+    "dependencies": {
+        "cordova-android": "^4.0.0",
+        "cordova-android-play-services-gradle-release": "^1.1.3"
+    }
 }
