@@ -29,7 +29,7 @@ function Common() {
                                 //alert(regid);
                             },
                             error: function (a, b, c) {
-                                alert("hata:" + a.responseText);
+                                common.showToast("Koordinatlarınızı kayıt altına alamıyorum!","long","center",0);
                             },
                             success: function (data) {
                                 //alert(data);

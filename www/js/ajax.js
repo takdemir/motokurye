@@ -71,7 +71,7 @@ var ajax={
                 //alert("ip alınıyor"+ajax.getipurl);
             },
             error: function (a,b,c) {
-                alert("Hata:" + a.responseText);
+                common.showToast("Şirket bilgilerinize ulaşılamadı!","long","center",0);
             },
             success: function (data) {
 
@@ -79,7 +79,7 @@ var ajax={
                     window.localStorage.setItem("ipurl",data.data);
                     ajax.login();
                 }else{
-                    alert(data.msg);
+                    common.showToast(data.msg,"long","center",0);
                 }
             }
 
@@ -98,10 +98,9 @@ var ajax={
             data: JSON.stringify(data),
             dataType: "json",
             beforeSend: function () {
-                //alert(window.localStorage.getItem("ipurl"));
             },
             error: function (a,b,c) {
-                alert("Hata:" + a.responseText);
+                common.showToast("Login esnasında hata oluştu!","long","center",0);
             },
             success: function (data) {
 
@@ -109,7 +108,7 @@ var ajax={
                     ajax.opensession(data.data.id,data.data.kuryeAdi);
                     ajax.creategcm();
                 }else{
-                    alert(data.msg);
+                    common.showToast(data.msg,"long","center",0);
                 }
             }
 
@@ -123,7 +122,8 @@ var ajax={
             if(window.localStorage.getItem("kuryeID")>0 && window.localStorage.getItem("kuryeID")!=""){
                 window.location.href="mypage.html";
             }else{
-                alert("Oturum açılamıyor. Lütfen yöneticinize başvurun!");
+                common.showToast("Oturum açılamıyor. Lütfen yöneticinize başvurun!","long","center",0);
+
             }
         } else {
 
@@ -145,13 +145,11 @@ var ajax={
             data: JSON.stringify(data),
             dataType:'json',
             beforeSend: function () {
-                //alert(regid);
             },
             error: function (a,b,c) {
-              alert("hata:" + a.responseText);
+                common.showToast("GCM bağlantınızı yapamıyorum!","long","center",0);
             },
             success: function(data){
-                //alert(data);
                 if(!data.hasError){
                     return true;
                 }
@@ -159,74 +157,8 @@ var ajax={
         });
 
     },
-    setlocation: function () {
-
-        var regid = window.localStorage.getItem("regid");
-        var kuryeID = window.localStorage.getItem("kuryeID");
-
-        if(kuryeID!="" && kuryeID>0) {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    var pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-
-                    var latitude = position.coords.latitude;
-                    var longitude = position.coords.longitude;
-
-
-
-                    if (latitude != "" && longitude != "") {
-
-                        var data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
-                        <!--Passing those values to the insertregid.php file-->
-                        $.ajax({
-                            url: window.localStorage.getItem("ipurl") + "/insertposition",
-                            type: "POST",
-                            data: JSON.stringify(data),
-                            dataType: 'json',
-                            beforeSend: function () {
-                                //alert(regid);
-                            },
-                            error: function (a, b, c) {
-                                alert("hata:" + a.responseText);
-                            },
-                            success: function (data) {
-                                //alert(data);
-                                if (!data.hasError) {
-                                    return true;
-                                }
-                            }
-                        });
-
-                    }
-
-                }, function () {
-
-                },{enableHighAccuracy: true});
-            }
-
-        }
-
-
-
-
-
-    },
     onError: function () {
         //alert("değişiklik yok");
     }
 
 };
-
-
-function callLocation() {
-    ajax.setlocation();
-
-}
-
-
-
-ajax.setlocation();
-setInterval("callLocation()",60000);
