@@ -77,7 +77,7 @@ function onDeviceReadyForMyPanel(){
 
 
 
-    var callbackFn = function (location) {
+    /*var callbackFn = function (location) {
 
         var regid = window.localStorage.getItem("regid");
         var kuryeID = window.localStorage.getItem("kuryeID");
@@ -140,7 +140,7 @@ function onDeviceReadyForMyPanel(){
 
 
 
-    backgroundGeolocation.start();
+    backgroundGeolocation.start();*/
 
 
 }
