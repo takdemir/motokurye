@@ -6,9 +6,12 @@
     },
     "cordova": {
         "platforms": [],
-        "plugins": {}
+        "plugins": {
+            "cordova-android-play-services-gradle-release": {}
+        }
     },
     "dependencies": {
-        "cordova-android": "^4.0.0"
+        "cordova-android": "^4.0.0",
+        "cordova-android-play-services-gradle-release": "^1.1.3"
     }
 }
