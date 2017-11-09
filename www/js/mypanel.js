@@ -26,6 +26,7 @@ var mypanel={
         window.localStorage.removeItem("kuryeID");
         window.localStorage.removeItem("kuryeName");
         window.localStorage.removeItem("ipurl");
+        window.localStorage.removeItem("regid");
         window.location.href="index.html";
     },
     getjobsOnkurye: function (kuryeID) {

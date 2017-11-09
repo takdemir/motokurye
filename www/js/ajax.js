@@ -26,7 +26,7 @@ function onDeviceReady(){
 
     <!--This will alert registration ID which is returned by the GCM-->
     push.on('registration', function(data) {
-        common.showToast("Bağlantı Kuruldu!","long","center",0);
+        common.showToast("Bağlantı Kuruldu!","short","center",0);
         window.localStorage.setItem("regid",data.registrationId);
     });
     push.on('notification', function(data) {
