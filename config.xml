@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.krapp.push" version="1.0.10" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>motokurye</name>
+<widget id="org.krapp.push" version="1.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Kurye Otomasyon Sistemleri</name>
     <description>
-        Motokurye
+        Kurye Otomasyon Sistemleri
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="taneryzb@hotmail.com" href="https://tbmsoft.xyz">
+        https://tbmsoft.xyz
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
