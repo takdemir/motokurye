@@ -62,9 +62,9 @@ function onDeviceReadyForMyPanel(){
         }
 
         if(vibratetime!="" && vibratetime!=null) {
-            navigator.notification.vibrate(vibratetime);
+            navigator.vibrate(vibratetime);
         }else{
-            navigator.notification.vibrate(2000);
+            navigator.vibrate(2000);
         }
 
 
