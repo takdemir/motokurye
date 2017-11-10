@@ -297,14 +297,16 @@ var mypanel={
                                 table += '<tr>' + '<th>Ödeme Şekli</th>' + '<td>' + v.odemesekli + '</td>' + '</tr>';
                             }
                             table +='<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.islemtipi+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Ödeme</th>'+'<td>'+v.odemedurumu+'</td>'+'</tr>'+
+                            /*'<tr>'+'<th>Ödeme</th>'+'<td>'+v.odemedurumu+'</td>'+'</tr>'+*/
                             '<tr>'+'<th>Ok.Saati</th>'+'<td>'+v.okumasaati+'</td>'+'</tr>'+
                             '<tr>'+'<th>Alım Saati</th>'+'<td>'+v.alimsaati+'</td>'+'</tr>'+
                             '<tr>'+'<th>Teslim Saati</th>'+'<td>'+v.teslimsaati+'</td>'+'</tr>'+
                             '<tr>'+'<th>Teslim Alan</th>'+'<td>'+v.teslimalan+'</td>'+'</tr>'+
                             '<tr>'+'<th>Yetkili</th>'+'<td>'+v.yetkiliname+'</td>'+'</tr>'+
                             '<tr>'+'<th>Yetkili Telefon</th>'+'<td>'+v.yetkilitel+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Not</th>'+'<td>'+v.not+'</td>'+'</tr>'+
+                            '<tr>'+'<th>F1 Not</th>'+'<td>'+v.not1+'</td>'+'</tr>'+
+                            '<tr>'+'<th>F2 Not</th>'+'<td>'+v.not2+'</td>'+'</tr>'+
+                            '<tr>'+'<th>F3 Not</th>'+'<td>'+v.not3+'</td>'+'</tr>'+
                             '<tr>'+'<th>Kayıt Veren (F1):</th>'+'<td>'+v.kayitveren+'</td>'+'</tr>'+
                             '<tr>'+'<th>Kayıt Veren Tel.:</th>'+'<td>'+v.kayitverencep+'</td>'+'</tr>'+
                             '<tr>'+'<th>F2 Tel.:</th>'+'<td>'+v.f2cep+'</td>'+'</tr>'+
