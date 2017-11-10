@@ -7,8 +7,7 @@
     "cordova": {
         "platforms": [],
         "plugins": {
-            "cordova-android-play-services-gradle-release": {},
-            "de.appplant.cordova.plugin.local-notification": {}
+            "cordova-android-play-services-gradle-release": {}
         }
     },
     "dependencies": {
