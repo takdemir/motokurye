@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 });
 
-
+var bgLocationServices =  window.plugins.backgroundLocationServices;
 
 document.addEventListener("deviceready",onDeviceReadyForMyPanel,false);
 
@@ -77,7 +77,7 @@ function onDeviceReadyForMyPanel(){
     });
 
 
-    var bgLocationServices =  window.plugins.backgroundLocationServices;
+    bgLocationServices =  window.plugins.backgroundLocationServices;
 
     //Congfigure Plugin
     bgLocationServices.configure({
@@ -175,6 +175,7 @@ var mypanel={
         window.localStorage.removeItem("ipurl");
         window.localStorage.setItem("regid","");
         window.localStorage.removeItem("regid");
+        bgLocationServices.stop();
         window.location.href="index.html";
     },
     getjobsOnkurye: function (kuryeID) {
