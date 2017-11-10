@@ -184,9 +184,11 @@ var mypanel={
                             '<div class="panel panel-primary"><div class="panel-heading">DİĞER BİLGİLER</div><div class="panel-body">'+
                             '<table class="table table-bordered">'+
                             '<tr>'+'<th>Tutar</th>'+'<td>'+v.tutar+' TL</td>'+'</tr>'+
-                            '<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.islemtipi+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Ödeme</th>'+'<td>'+v.odemedurumu+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Okuma Saati</th>'+'<td>'+v.okumasaati+'</td>'+'</tr>'+
+                            '<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.islemtipi+'</td>'+'</tr>';
+                            if(v.odemesekli!="" && v.odemesekli!=null) {
+                                table += '<tr>' + '<th>Ödeme Şekli</th>' + '<td>' + v.odemesekli + '</td>' + '</tr>';
+                            }
+                            table +='<tr>'+'<th>Okuma Saati</th>'+'<td>'+v.okumasaati+'</td>'+'</tr>'+
                             '<tr>'+'<th>Yetkili</th>'+'<td>'+v.yetkiliname+'</td>'+'</tr>'+
                             '<tr>'+'<th>Yetkili Telefon</th>'+'<td>'+v.yetkilitel+'</td>'+'</tr>'+
                             '<tr>'+'<th>Kayıt Veren (F1):</th>'+'<td>'+v.kayitveren+'</td>'+'</tr>'+
