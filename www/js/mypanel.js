@@ -97,7 +97,6 @@ function onDeviceReadyForMyPanel(){
 
     //Register a callback for location updates, this is where location objects will be sent in the background
     bgLocationServices.registerForLocationUpdates(function(location) {
-    bgLocationServices.registerForLocationUpdates(function(location) {
         common.showToast("We got an BG Update" + JSON.stringify(location),"long","center",0);
     }, function(err) {
         common.showToast("Error: Didnt get an update", err,"long","center",0);
@@ -109,9 +108,9 @@ function onDeviceReadyForMyPanel(){
 //See here for more information:
 //https://developers.google.com/android/reference/com/google/android/gms/location/DetectedActivity
     bgLocationServices.registerForActivityUpdates(function(activities) {
-        console.log("We got an activity update" + activities);
+        common.showToast("We got an activity update" + activities,"long","center",0);
     }, function(err) {
-        console.log("Error: Something went wrong", err);
+        common.showToast("Error: Something went wrong", err,"long","center",0);
     });
 
 //Start the Background Tracker. When you enter the background tracking will start, and stop when you enter the foreground.
@@ -120,74 +119,6 @@ function onDeviceReadyForMyPanel(){
 
 ///later, to stop
     bgLocationServices.stop();
-
-
-
-
-    /*var callbackFn = function (location) {
-
-        var regid = window.localStorage.getItem("regid");
-        var kuryeID = window.localStorage.getItem("kuryeID");
-        var latitude = location.latitude;
-        var longitude = location.longitude;
-
-
-
-        if (latitude != "" && longitude != "") {
-
-            var data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
-            <!--Passing those values to the insertregid.php file-->
-            $.ajax({
-                url: window.localStorage.getItem("ipurl") + "/insertposition",
-                type: "POST",
-                data: JSON.stringify(data),
-                dataType: 'json',
-                beforeSend: function () {
-
-                },
-                error: function (a, b, c) {
-                    common.showToast("Koordinatları yollayamadım!","short","center",0);
-                },
-                success: function (data) {
-                    if (!data.hasError) {
-                        return true;
-                    }
-                }
-            });
-
-        }
-
-        backgroundGeolocation.finish();
-
-    };
-
-    backgroundGeolocation.configure(callbackFn, failureFn, {
-        desiredAccuracy: 10,
-        stationaryRadius: 20,
-        distanceFilter: 30,
-        url: window.localStorage.getItem("ipurl")+'/insertbackgroundposition',
-        syncUrl: window.localStorage.getItem("ipurl")+'/insertbackgroundposition',
-        httpHeaders: { 'X-FOO': 'bar' },
-        maxLocations: 10000,
-        // Android only section
-        locationProvider: backgroundGeolocation.provider.ANDROID_ACTIVITY_PROVIDER,
-        interval: 20000,
-        stopOnTerminate: true,
-        startOnBoot: true,
-        startForeground: false,
-        fastestInterval: 1000,
-        activitiesInterval: 5000,
-        notificationTitle: 'Background tracking',
-        notificationText: 'enabled',
-        notificationIconColor: '#FEDD1E',
-        notificationIconLarge: 'mappointer_large',
-        notificationIconSmall: 'mappointer_small',
-        debug: true
-    });
-
-
-
-    backgroundGeolocation.start();*/
 
 
 }
