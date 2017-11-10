@@ -89,17 +89,52 @@ function onDeviceReadyForMyPanel(){
         useActivityDetection: true, // Uses Activitiy detection to shut off gps when you are still (Greatly enhances Battery Life)
 
         //Android Only
-        notificationTitle: 'BG Plugin', // customize the title of the notification
-        notificationText: 'Tracking', //customize the text of the notification
+        notificationTitle: 'Kurye Otomasyon Sistemi Navigasyon Takip Sistemi', // customize the title of the notification
+        notificationText: 'Navigasyon izliyor...', //customize the text of the notification
         fastestInterval: 5000 // <-- (Milliseconds) Fastest interval your app / server can handle updates
 
     });
 
     //Register a callback for location updates, this is where location objects will be sent in the background
     bgLocationServices.registerForLocationUpdates(function(location) {
-        common.showToast("We got an BG Update" + JSON.stringify(location),"long","center",0);
+        //common.showToast("We got an BG Update" + JSON.stringify(location),"long","center",0);
+        var pos = {
+            lat: location.latitude,
+            lng: location.longitude
+        };
+
+        var latitude = location.latitude;
+        var longitude = location.longitude;
+        var regid = window.localStorage.getItem("regid");
+        var kuryeID = window.localStorage.getItem("kuryeID");
+
+
+        if (latitude != "" && longitude != "") {
+
+            var data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
+            <!--Passing those values to the insertregid.php file-->
+            $.ajax({
+                url: window.localStorage.getItem("ipurl") + "/insertposition",
+                type: "POST",
+                data: JSON.stringify(data),
+                dataType: 'json',
+                beforeSend: function () {
+
+                },
+                error: function (a, b, c) {
+
+                },
+                success: function (data) {
+
+                    if (!data.hasError) {
+                        return true;
+                    }
+                }
+            });
+
+        }
     }, function(err) {
-        common.showToast("Error: Didnt get an update", err,"long","center",0);
+        common.showToast("Sistem navigasyon kayıtlarını alamıyor!","long","center",0);
     });
 
     //Register for Activity Updates
@@ -108,9 +143,9 @@ function onDeviceReadyForMyPanel(){
 //See here for more information:
 //https://developers.google.com/android/reference/com/google/android/gms/location/DetectedActivity
     bgLocationServices.registerForActivityUpdates(function(activities) {
-        common.showToast("We got an activity update" + activities,"long","center",0);
+        //common.showToast("We got an activity update" + activities,"long","center",0);
     }, function(err) {
-        common.showToast("Error: Something went wrong", err,"long","center",0);
+        //common.showToast("Error: Something went wrong", err,"long","center",0);
     });
 
 //Start the Background Tracker. When you enter the background tracking will start, and stop when you enter the foreground.
