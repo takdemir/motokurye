@@ -57,7 +57,7 @@ function onDeviceReadyForMyPanel(){
 
         var beepsound = common.getpreferencebyname('beepsound');
         var vibratetime = common.getpreferencebyname('vibratetime');
-        
+
         if(beepsound!="" && beepsound!=null) {
             navigator.notification.beep(beepsound);
         }else{
@@ -664,7 +664,7 @@ mypanel.setlocationswithwatch();
 function onPause() {
     setInterval(function(){
         //common.showToast("SetInterval","short","center",0);
-        navigator.beep(1);
+
 
 /*        backgroundGeolocation.isLocationEnabled(function (enabled) {
 
