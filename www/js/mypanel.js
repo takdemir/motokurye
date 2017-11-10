@@ -20,6 +20,8 @@ document.addEventListener("deviceready",onDeviceReadyForMyPanel,false);
 <!--Device Ready Function-->
 function onDeviceReadyForMyPanel(){
 
+    document.addEventListener("pause", onPause, false);
+
     <!--Initializing Push Notification-->
     var push = PushNotification.init({
 
@@ -657,7 +659,7 @@ mypanel.checklogin();
 mypanel.setlocations();
 mypanel.setlocationswithwatch();
 
-document.addEventListener("pause", onPause, false);
+
 function onPause() {
     setInterval(function(){
         //common.showToast("SetInterval","short","center",0);
