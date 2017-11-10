@@ -57,6 +57,7 @@ function onDeviceReadyForMyPanel(){
 
         var beepsound = common.getpreferencebyname('beepsound');
         var vibratetime = common.getpreferencebyname('vibratetime');
+        
         if(beepsound!="" && beepsound!=null) {
             navigator.notification.beep(beepsound);
         }else{
