@@ -118,7 +118,7 @@ function onDeviceReadyForMyPanel(){
 
 
 ///later, to stop
-    bgLocationServices.stop();
+    //bgLocationServices.stop();
 
 
 }
