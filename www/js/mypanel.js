@@ -11,157 +11,89 @@ $(document).ready(function () {
 
 });
 
-var bgLocationServices =  window.plugins.backgroundLocationServices;
-
-document.addEventListener("deviceready",onDeviceReadyForMyPanel,false);
-
-
-
-<!--Device Ready Function-->
-function onDeviceReadyForMyPanel(){
-
-    document.addEventListener("pause", onPause, false);
-
-    <!--Initializing Push Notification-->
-    var push = PushNotification.init({
-
-        <!--Setting attributes for Android, IOS and Windows-->
-        android: {
-            senderID: "809436805306"
-        },
-        ios: {
-            alert: "true",
-            badge: "true",
-            sound: "true"
-        },
-        windows: {}
-    });
-
-    <!--This will alert registration ID which is returned by the GCM-->
-    push.on('registration', function(data) {
-        //window.localStorage.setItem("regid",data.registrationId);
-    });
-    push.on('notification', function(data) {
-
-        if(window.localStorage.getItem("kuryeID")!="" && window.localStorage.getItem("kuryeID")>0) {
-            mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
-            mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
-        }
-
-        navigator.notification.alert(
-            data.message,         // message
-            null,                 // callback
-            data.title,           // title
-            'Tamam'                  // buttonName
-        );
-
-        var beepsound = common.getpreferencebyname('beepsound');
-        var vibratetime = common.getpreferencebyname('vibratetime');
-
-        if(beepsound!="" && beepsound!=null) {
-            navigator.notification.beep(beepsound);
-        }else{
-            navigator.notification.beep(1);
-        }
-
-        if(vibratetime!="" && vibratetime!=null) {
-            navigator.vibrate(vibratetime);
-        }else{
-            navigator.vibrate(2000);
-        }
-
-
-    });
-    push.on('error', function(e) {
-        common.showToast("gcm hata oluştu!","short","center",0);
-    });
-
-
-    bgLocationServices =  window.plugins.backgroundLocationServices;
-
-    //Congfigure Plugin
-    bgLocationServices.configure({
-        //Both
-        desiredAccuracy: 10, // Desired Accuracy of the location updates (lower means more accurate but more battery consumption)
-        distanceFilter: 5, // (Meters) How far you must move from the last point to trigger a location update
-        debug: true, // <-- Enable to show visual indications when you receive a background location update
-        interval: 5000, // (Milliseconds) Requested Interval in between location updates.
-        useActivityDetection: false, // Uses Activitiy detection to shut off gps when you are still (Greatly enhances Battery Life)
-
-        //Android Only
-        notificationTitle: 'Kurye Otomasyon Sistemi Navigasyon Takip Sistemi', // customize the title of the notification
-        notificationText: 'Navigasyon izliyor...', //customize the text of the notification
-        fastestInterval: 5000 // <-- (Milliseconds) Fastest interval your app / server can handle updates
-
-    });
-
-    //Register a callback for location updates, this is where location objects will be sent in the background
-    bgLocationServices.registerForLocationUpdates(function(location) {
-        //common.showToast("We got an BG Update" + JSON.stringify(location),"long","center",0);
-        var pos = {
-            lat: location.latitude,
-            lng: location.longitude
-        };
-
-        var latitude = location.latitude;
-        var longitude = location.longitude;
-        var regid = window.localStorage.getItem("regid");
-        var kuryeID = window.localStorage.getItem("kuryeID");
-
-
-        if (latitude != "" && longitude != "") {
-
-            var data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
-            <!--Passing those values to the insertregid.php file-->
-            $.ajax({
-                url: window.localStorage.getItem("ipurl") + "/insertposition",
-                type: "POST",
-                data: JSON.stringify(data),
-                dataType: 'json',
-                beforeSend: function () {
-
-                },
-                error: function (a, b, c) {
-
-                },
-                success: function (data) {
-
-                    if (!data.hasError) {
-                        return true;
-                    }
-                }
-            });
-
-        }
-    }, function(err) {
-        common.showToast("Sistem navigasyon kayıtlarını alamıyor!","long","center",0);
-    });
-
-    //Register for Activity Updates
-
-//Uses the Detected Activies / CoreMotion API to send back an array of activities and their confidence levels
-//See here for more information:
-//https://developers.google.com/android/reference/com/google/android/gms/location/DetectedActivity
-    bgLocationServices.registerForActivityUpdates(function(activities) {
-        //common.showToast("We got an activity update" + activities,"long","center",0);
-    }, function(err) {
-        //common.showToast("Error: Something went wrong", err,"long","center",0);
-    });
-
-//Start the Background Tracker. When you enter the background tracking will start, and stop when you enter the foreground.
-    bgLocationServices.start();
-
-
-///later, to stop
-    //bgLocationServices.stop();
-
-
-}
-
-
 
 
 var mypanel={
+
+    bgLocationServices:"",
+
+    startBGlocation: function () {
+
+        mypanel.bgLocationServices =  window.plugins.backgroundLocationServices;
+
+        //Congfigure Plugin
+        mypanel.bgLocationServices.configure({
+            //Both
+            desiredAccuracy: 10, // Desired Accuracy of the location updates (lower means more accurate but more battery consumption)
+            distanceFilter: 5, // (Meters) How far you must move from the last point to trigger a location update
+            debug: true, // <-- Enable to show visual indications when you receive a background location update
+            interval: 5000, // (Milliseconds) Requested Interval in between location updates.
+            useActivityDetection: false, // Uses Activitiy detection to shut off gps when you are still (Greatly enhances Battery Life)
+
+            //Android Only
+            notificationTitle: 'Kurye Otomasyon Sistemi Navigasyon Takip Sistemi', // customize the title of the notification
+            notificationText: 'Navigasyon izliyor...', //customize the text of the notification
+            fastestInterval: 5000 // <-- (Milliseconds) Fastest interval your app / server can handle updates
+
+        });
+
+        //Register a callback for location updates, this is where location objects will be sent in the background
+        mypanel.bgLocationServices.registerForLocationUpdates(function(location) {
+            //common.showToast("We got an BG Update" + JSON.stringify(location),"long","center",0);
+            var pos = {
+                lat: location.latitude,
+                lng: location.longitude
+            };
+
+            var latitude = location.latitude;
+            var longitude = location.longitude;
+            var regid = window.localStorage.getItem("regid");
+            var kuryeID = window.localStorage.getItem("kuryeID");
+
+
+            if (latitude != "" && longitude != "") {
+
+                var data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
+                <!--Passing those values to the insertregid.php file-->
+                $.ajax({
+                    url: window.localStorage.getItem("ipurl") + "/insertposition",
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    dataType: 'json',
+                    beforeSend: function () {
+
+                    },
+                    error: function (a, b, c) {
+
+                    },
+                    success: function (data) {
+
+                        if (!data.hasError) {
+                            return true;
+                        }
+                    }
+                });
+
+            }
+        }, function(err) {
+            common.showToast("Sistem navigasyon kayıtlarını alamıyor!","long","center",0);
+        });
+
+        //Register for Activity Updates
+
+        //Uses the Detected Activies / CoreMotion API to send back an array of activities and their confidence levels
+        //See here for more information:
+        //https://developers.google.com/android/reference/com/google/android/gms/location/DetectedActivity
+        mypanel.bgLocationServices.registerForActivityUpdates(function(activities) {
+            //common.showToast("We got an activity update" + activities,"long","center",0);
+        }, function(err) {
+            //common.showToast("Error: Something went wrong", err,"long","center",0);
+        });
+
+        //Start the Background Tracker. When you enter the background tracking will start, and stop when you enter the foreground.
+        mypanel.bgLocationServices.start();
+
+    },
 
     checklogin: function () {
 
@@ -175,7 +107,7 @@ var mypanel={
         window.localStorage.removeItem("ipurl");
         window.localStorage.setItem("regid","");
         window.localStorage.removeItem("regid");
-        bgLocationServices.stop();
+        mypanel.bgLocationServices.stop();
         window.location.href="index.html";
     },
     getjobsOnkurye: function (kuryeID) {
@@ -663,6 +595,87 @@ var mypanel={
 
     }
 };
+
+
+
+
+
+document.addEventListener("deviceready",onDeviceReadyForMyPanel,false);
+
+
+
+<!--Device Ready Function-->
+function onDeviceReadyForMyPanel(){
+
+    document.addEventListener("pause", onPause, false);
+
+    <!--Initializing Push Notification-->
+    var push = PushNotification.init({
+
+        <!--Setting attributes for Android, IOS and Windows-->
+        android: {
+            senderID: "809436805306"
+        },
+        ios: {
+            alert: "true",
+            badge: "true",
+            sound: "true"
+        },
+        windows: {}
+    });
+
+    <!--This will alert registration ID which is returned by the GCM-->
+    push.on('registration', function(data) {
+        //window.localStorage.setItem("regid",data.registrationId);
+    });
+    push.on('notification', function(data) {
+
+        if(window.localStorage.getItem("kuryeID")!="" && window.localStorage.getItem("kuryeID")>0) {
+            mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
+            mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
+        }
+
+        navigator.notification.alert(
+            data.message,         // message
+            null,                 // callback
+            data.title,           // title
+            'Tamam'                  // buttonName
+        );
+
+        var beepsound = common.getpreferencebyname('beepsound');
+        var vibratetime = common.getpreferencebyname('vibratetime');
+
+        if(beepsound!="" && beepsound!=null) {
+            navigator.notification.beep(beepsound);
+        }else{
+            navigator.notification.beep(1);
+        }
+
+        if(vibratetime!="" && vibratetime!=null) {
+            navigator.vibrate(vibratetime);
+        }else{
+            navigator.vibrate(2000);
+        }
+
+
+    });
+    push.on('error', function(e) {
+        common.showToast("gcm hata oluştu!","short","center",0);
+    });
+
+
+    mypanel.startBGlocation();
+
+
+///later, to stop
+    //bgLocationServices.stop();
+
+
+}
+
+
+
+
 
 
 
