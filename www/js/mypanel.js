@@ -292,8 +292,11 @@ var mypanel={
                             '<tr>'+'<th>Tes.Kisi</th>'+'<td>'+v.teslimkisi+'</td>'+'</tr>'+
                             '<tr>'+'<th>Tes.Semt</th>'+'<td>'+v.teslimsemt+'</td>'+'</tr>'+
                             '<tr>'+'<th>Tes.Adres</th>'+'<td>'+v.teslimadres+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Tutar</th>'+'<td>'+v.tutar+' TL</td>'+'</tr>'+
-                            '<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.islemtipi+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Tutar</th>'+'<td>'+v.tutar+' TL</td>'+'</tr>';
+                            if(v.odemesekli!="" && v.odemesekli!=null) {
+                                table += '<tr>' + '<th>Ödeme Şekli</th>' + '<td>' + v.odemesekli + '</td>' + '</tr>';
+                            }
+                            table +='<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.islemtipi+'</td>'+'</tr>'+
                             '<tr>'+'<th>Ödeme</th>'+'<td>'+v.odemedurumu+'</td>'+'</tr>'+
                             '<tr>'+'<th>Ok.Saati</th>'+'<td>'+v.okumasaati+'</td>'+'</tr>'+
                             '<tr>'+'<th>Alım Saati</th>'+'<td>'+v.alimsaati+'</td>'+'</tr>'+
